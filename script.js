@@ -3,6 +3,58 @@
 const API_KEY = "1f0ef25771d74023a3118716b153dfc3";
 const url = "https://newsapi.org/v2/everything?q=";
 
+// Fallback news data in case API fails
+const fallbackNews = [
+    {
+        title: "Breaking: Major Tech Breakthrough Announced",
+        description: "Scientists discover revolutionary quantum computing method that could transform the industry.",
+        urlToImage: "https://picsum.photos/400/200?random=10",
+        url: "https://example.com/tech-breakthrough",
+        source: { name: "Tech News" },
+        publishedAt: new Date().toISOString()
+    },
+    {
+        title: "Global Markets Reach New Heights",
+        description: "Stock markets worldwide achieve record-breaking performance as economic recovery continues.",
+        urlToImage: "https://picsum.photos/400/200?random=11",
+        url: "https://example.com/markets-news",
+        source: { name: "Finance Daily" },
+        publishedAt: new Date().toISOString()
+    },
+    {
+        title: "Sports: Championship Finals Set",
+        description: "Top teams prepare for the most anticipated championship match of the season.",
+        urlToImage: "https://picsum.photos/400/200?random=12",
+        url: "https://example.com/sports-news",
+        source: { name: "Sports Central" },
+        publishedAt: new Date().toISOString()
+    },
+    {
+        title: "Environmental Initiative Launched",
+        description: "Global leaders announce comprehensive plan to combat climate change.",
+        urlToImage: "https://picsum.photos/400/200?random=13",
+        url: "https://example.com/environment-news",
+        source: { name: "Green News" },
+        publishedAt: new Date().toISOString()
+    },
+    {
+        title: "Entertainment: Blockbuster Movie Release",
+        description: "Highly anticipated film breaks box office records on opening weekend.",
+        urlToImage: "https://picsum.photos/400/200?random=14",
+        url: "https://example.com/entertainment-news",
+        source: { name: "Entertainment Weekly" },
+        publishedAt: new Date().toISOString()
+    },
+    {
+        title: "Health: Medical Breakthrough Announced",
+        description: "Researchers develop new treatment method showing promising results in clinical trials.",
+        urlToImage: "https://picsum.photos/400/200?random=15",
+        url: "https://example.com/health-news",
+        source: { name: "Health Today" },
+        publishedAt: new Date().toISOString()
+    }
+];
+
 window.addEventListener("load", () => fetchNews("India"));
 
 function reload() {
@@ -10,9 +62,28 @@ function reload() {
 }
 
 async function fetchNews(query) {
-    const res = await fetch(`${url}${query}&apiKey=${API_KEY}`);
-    const data = await res.json();
-    bindData(data.articles);
+    try {
+        console.log("Fetching news for:", query);
+        const res = await fetch(`${url}${query}&apiKey=${API_KEY}`);
+        
+        if (!res.ok) {
+            throw new Error(`HTTP error! status: ${res.status}`);
+        }
+        
+        const data = await res.json();
+        
+        if (data.articles && data.articles.length > 0) {
+            console.log("API news loaded successfully:", data.articles.length, "articles");
+            bindData(data.articles);
+        } else {
+            console.log("No articles from API, using fallback data");
+            bindData(fallbackNews);
+        }
+    } catch (error) {
+        console.error("Error fetching news from API:", error);
+        console.log("Using fallback news data");
+        bindData(fallbackNews);
+    }
 }
 
 function bindData(articles) {
@@ -20,10 +91,18 @@ function bindData(articles) {
     const newsCardTemplate = document.getElementById("template-news-card");
     const adCardTemplate = document.getElementById("template-ad-card");
 
+    if (!cardsContainer || !newsCardTemplate || !adCardTemplate) {
+        console.error("Required elements not found");
+        return;
+    }
+
     cardsContainer.innerHTML = "";
 
     articles.forEach((article, index) => {
-        if (!article.urlToImage) return;
+        if (!article.urlToImage) {
+            // Use fallback image if none provided
+            article.urlToImage = `https://picsum.photos/400/200?random=${index + 20}`;
+        }
         
         // Add news card
         const cardClone = newsCardTemplate.content.cloneNode(true);
@@ -35,6 +114,8 @@ function bindData(articles) {
         fillDataInAdCard(adClone, index);
         cardsContainer.appendChild(adClone);
     });
+    
+    console.log("Content loaded successfully:", articles.length, "news articles with ads");
 }
 
 function fillDataInCard(cardClone, article) {
@@ -52,6 +133,12 @@ function fillDataInCard(cardClone, article) {
     });
 
     newsSource.innerHTML = `${article.source.name} · ${date}`;
+
+    // Add error handling for news images
+    newsImg.onerror = function() {
+        console.log(`News image failed to load: ${article.title}`);
+        this.src = `https://picsum.photos/400/200?random=${Math.floor(Math.random() * 1000)}`;
+    };
 
     cardClone.firstElementChild.addEventListener("click", () => {
         window.open(article.url, "_blank");
