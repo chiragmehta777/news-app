@@ -1,0 +1,29 @@
+{
+  "name": "news-app",
+  "version": "1.0.0",
+  "description": "A responsive news application with dark theme and ad integration",
+  "main": "index.html",
+  "scripts": {
+    "start": "npx serve .",
+    "dev": "npx serve .",
+    "build": "echo 'Static site - no build required'",
+    "deploy": "vercel --prod"
+  },
+  "keywords": [
+    "news",
+    "responsive",
+    "dark-theme",
+    "ads",
+    "javascript",
+    "html",
+    "css"
+  ],
+  "author": "Your Name",
+  "license": "MIT",
+  "devDependencies": {
+    "serve": "^14.2.0"
+  },
+  "engines": {
+    "node": ">=14.0.0"
+  }
+} 
