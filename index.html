@@ -35,6 +35,107 @@
         </div>
     </main>
 
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>About News App</h3>
+                    <p>Your trusted source for the latest news and updates from around the world. We bring you breaking news, in-depth analysis, and comprehensive coverage of current events.</p>
+                    <div class="social-links">
+                        <a href="#" class="social-link">📧 Email</a>
+                        <a href="#" class="social-link">📱 Mobile</a>
+                        <a href="#" class="social-link">🌐 Web</a>
+                    </div>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <ul class="footer-links">
+                        <li><a href="#" onclick="onNavItemClick('ipl')">IPL News</a></li>
+                        <li><a href="#" onclick="onNavItemClick('finance')">Finance</a></li>
+                        <li><a href="#" onclick="onNavItemClick('politics')">Politics</a></li>
+                        <li><a href="#" onclick="fetchNews('technology')">Technology</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Contact & Support</h3>
+                    <ul class="footer-links">
+                        <li><a href="#" onclick="showContactForm()">📞 Contact Us</a></li>
+                        <li><a href="#" onclick="showSupport()">🆘 Support</a></li>
+                        <li><a href="#" onclick="showFeedback()">💬 Feedback</a></li>
+                        <li><a href="#" onclick="showPrivacy()">🔒 Privacy Policy</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Newsletter</h3>
+                    <p>Stay updated with the latest news delivered to your inbox.</p>
+                    <div class="newsletter-form">
+                        <input type="email" placeholder="Enter your email" class="newsletter-input">
+                        <button class="newsletter-button">Subscribe</button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2024 News App. All rights reserved. | Made with ❤️ for news lovers</p>
+                <div class="footer-bottom-links">
+                    <a href="#" onclick="showTerms()">Terms of Service</a>
+                    <a href="#" onclick="showPrivacy()">Privacy Policy</a>
+                    <a href="#" onclick="showCookies()">Cookie Policy</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Contact Modal -->
+    <div id="contactModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Contact Us</h2>
+            <form class="contact-form">
+                <input type="text" placeholder="Your Name" required>
+                <input type="email" placeholder="Your Email" required>
+                <select required>
+                    <option value="">Select Topic</option>
+                    <option value="general">General Inquiry</option>
+                    <option value="support">Technical Support</option>
+                    <option value="feedback">Feedback</option>
+                    <option value="advertising">Advertising</option>
+                </select>
+                <textarea placeholder="Your Message" rows="5" required></textarea>
+                <button type="submit">Send Message</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Support Modal -->
+    <div id="supportModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Support Center</h2>
+            <div class="support-content">
+                <div class="support-item">
+                    <h3>📧 Email Support</h3>
+                    <p>support@newsapp.com</p>
+                </div>
+                <div class="support-item">
+                    <h3>📞 Phone Support</h3>
+                    <p>+1 (555) 123-4567</p>
+                </div>
+                <div class="support-item">
+                    <h3>💬 Live Chat</h3>
+                    <p>Available 24/7</p>
+                </div>
+                <div class="support-item">
+                    <h3>📋 FAQ</h3>
+                    <p>Check our frequently asked questions</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <template id="template-news-card">
         <div class="card">
             <div class="card-header">
@@ -44,6 +145,20 @@
                 <h3 id="news-title">This is the Title</h3>
                 <h6 class="news-source" id="news-source">End Gadget 26/08/2023</h6>
                 <p class="news-desc" id="news-desc">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Recusandae saepe quis voluptatum quisquam vitae doloremque facilis molestias quae ratione cumque!</p>
+            </div>
+        </div>
+    </template>
+
+    <template id="template-ad-card">
+        <div class="ad-card">
+            <div class="ad-header">
+                <span class="ad-label">💰 EARN MONEY</span>
+                <img src="https://picsum.photos/400/200?random=1" alt="advertisement" class="ad-image">
+            </div>
+            <div class="ad-content">
+                <h3 class="ad-title">Sponsored Content</h3>
+                <p class="ad-description">This is a sponsored advertisement. Click to learn more about our products and services.</p>
+                <button class="ad-button">💰 CLICK TO EARN</button>
             </div>
         </div>
     </template>
